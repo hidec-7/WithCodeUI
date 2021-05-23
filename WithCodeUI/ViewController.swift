@@ -8,6 +8,7 @@
 import UIKit
 
 struct Player {
+    let pogision: String
     let name: String
     var image: UIImage?
 }
@@ -16,7 +17,7 @@ class ViewController: UIViewController {
     
     private let cellId = "cellId"
     private let players: [Player] = [
-        .init(name: "サッカーボール", image: UIImage(named: "サッカーボール"))
+        .init(pogision: "ポジション", name: "サッカーボール", image: UIImage(named: "サッカーボール"))
     ]
     
     lazy var playerTableView: UITableView = {
@@ -73,6 +74,7 @@ class PlayerTableViewCell: UITableViewCell {
                 playerImageView.image = image
             }
             nameLabel.text = player?.name
+            pogisionLabel.text = player?.pogision
         }
     }
     
@@ -95,19 +97,30 @@ class PlayerTableViewCell: UITableViewCell {
         return label
     }()
     
+    let pogisionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "ポジジョン"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(playerImageView)
         addSubview(nameLabel)
+        addSubview(pogisionLabel)
         
         [playerImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
          playerImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
          playerImageView.widthAnchor.constraint(equalToConstant: playerImageViewHeight),
          playerImageView.heightAnchor.constraint(equalToConstant: playerImageViewHeight),
          
-         nameLabel.leftAnchor.constraint(equalTo: playerImageView.rightAnchor, constant: 20),
-         nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+         nameLabel.leftAnchor.constraint(equalTo: playerImageView.rightAnchor, constant: 24),
+         nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+         
+         pogisionLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 32),
+         pogisionLabel.leftAnchor.constraint(equalTo: playerImageView.rightAnchor, constant: 24)
          
         ].forEach{ $0.isActive = true }
     }
